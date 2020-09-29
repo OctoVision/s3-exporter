@@ -1,5 +1,5 @@
 FROM python:2.7.14-alpine3.6
-MAINTAINER Renzo Meister <rm@jamotion.ch>
+# MAINTAINER Renzo Meister <rm@jamotion.ch>
 
 RUN apk add --no-cache gcc libffi-dev musl-dev openssl-dev perl py-pip python python-dev
 

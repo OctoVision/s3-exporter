@@ -21,6 +21,7 @@
 #
 import fnmatch
 import time
+import datetime
 from dateutil import parser as dtparser
 from prometheus_client import start_http_server
 from prometheus_client.core import GaugeMetricFamily, REGISTRY
@@ -100,7 +101,7 @@ class S3Collector(object):
             if prefix == '/':
                 result = self._s3.bucket_list(config.get('bucket'), None)
             else:
-                result = self._s3.bucket_list(config.get('bucket'), prefix)
+                result = self._s3.bucket_list(config.get('bucket'), prefix + str(datetime.date.today()))
             files = result['list']
             if pattern:
                 files = [f for f in files if fnmatch.fnmatch(f['Key'], pattern)]
