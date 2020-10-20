@@ -22,6 +22,7 @@
 import fnmatch
 import time
 import datetime
+from datetime import datetime, timezone, timedelta
 from dateutil import parser as dtparser
 from prometheus_client import start_http_server
 from prometheus_client.core import GaugeMetricFamily, REGISTRY
@@ -39,6 +40,8 @@ def string_to_timestamp(string_value):
     datetime_value = dtparser.parse(string_value)
     return time.mktime(datetime_value.timetuple()) * 1000 + datetime_value.microsecond / 1000
 
+def date_now_bangkok():
+    return str(datetime.now(timezone(timedelta(seconds=7*3600))))[0:10]
 
 class S3Collector(object):
     def __init__(self, config):
@@ -101,7 +104,7 @@ class S3Collector(object):
             if prefix == '/':
                 result = self._s3.bucket_list(config.get('bucket'), None)
             else:
-                result = self._s3.bucket_list(config.get('bucket'), prefix + str(datetime.date.today()))
+                result = self._s3.bucket_list(config.get('bucket'), prefix + date_now_bangkok())
             files = result['list']
             if pattern:
                 files = [f for f in files if fnmatch.fnmatch(f['Key'], pattern)]

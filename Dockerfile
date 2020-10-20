@@ -1,7 +1,7 @@
-FROM python:2.7.14-alpine3.6
+FROM python:3.8-alpine
 # MAINTAINER Renzo Meister <rm@jamotion.ch>
 
-RUN apk add --no-cache gcc libffi-dev musl-dev openssl-dev perl py-pip python python-dev
+RUN apk add --no-cache gcc libffi-dev musl-dev openssl-dev perl py-pip 
 
 COPY app/requirements.txt /opt/prometheus-s3-exporter/requirements.txt
 RUN pip install -r /opt/prometheus-s3-exporter/requirements.txt
